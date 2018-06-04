@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>Long Polling</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  		<script src="{{ url_for("static", filename="polling.js") }}"></script>
+	</head>
+	<body>
+		<div id="contents">Status</div>
+        <br />
+        <button id="start1">Start 1</button>
+        <button id="start2">Start 2</button>
+	</body>
+    <script>
+        $(document).ready(function () {
+            $("#start1").click(function () {
+                $("#contents").text("Starting...");
+                polling.start("first_logic","param1=10&param2=20");
+                polling.onupdate = function (e) {
+                    $("#contents").html('Fucking! ...' + e.data + '<br />' + JSON.stringify(e));
+                };
+            });
+            $("#start2").click(function () {
+                $("#contents").text("Starting...");
+                polling.start("second_logic","id=S001&name=Hello");
+                polling.onupdate = function (e) {
+                    $("#contents").html('Fucking! ...' + e.data + '<br />' + JSON.stringify(e));
+                };
+            });
+        });
+    </script>
+</html>
